@@ -53,41 +53,48 @@ class ChessBoard {
         if (y === x + n || y === x - n) return true;
         else return false;
     }
-}
 
-
-
-
-
-
-// 3. employ a search algorithm to output the fewest moves to a given space.
-const knightMoves = function (start, end) {
-    //first: check 
-    if (
-        !isValidSpace(start) ||
-        !isValidSpace(end)
-    ) return null;
-    else return true
-
-
-
+    // 3. employ a search algorithm to output the fewest moves to a given space.
+    knightMoves (start, end) {
+        //first: check 
+        if (
+            !isValidSpace(start) || 
+            !isValidSpace(end)
+        ) return null;
+        
+        let queue = [start];
     
-}
-
-//helper function: checks that array contain only values from 0-7
-function isValidSpace (arr) {
-    if (
-        !(Array.isArray(arr)) || // must be array
-        arr.length !== 2// of length 2
-    ) return false
-    else {
-        console.log(arr)
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i] < 0 || arr[i] > 7) {
-                return false;
-            }
+        //breadth-first search
+        while (queue.length > 0) { 
+            current = queue.shift(); //dequeue current
+    
+            //process
+    
+            //enqueue all child nodes
+            
+            
+    
         }
-        return true;
+    
+    
+        
+    }
+    
+    //helper function: checks that array contain only values from 0-7
+    isValidSpace (arr) {
+        if (
+            !(Array.isArray(arr)) || // must be array
+            arr.length !== 2// of length 2
+        ) return false
+        else {
+            console.log(arr)
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] < 0 || arr[i] > 7) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
 
