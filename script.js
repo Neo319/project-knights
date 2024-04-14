@@ -4,6 +4,7 @@
 class ChessBoard {
     constructor () {
         this.board = this.generateBoard();
+        this.adjacency = this.generateAdjacencyList();
     }
 
     generateBoard () {
@@ -25,15 +26,13 @@ class ChessBoard {
         this.board.forEach((square) => {
             let current = [];
             this.board.forEach((comparison) => {
-                
+                if (this.knightLogic(square, comparison)) {
+                    current.push(comparison);
+                }
             })
-                
+            output.push(current); 
         })
-
-
-
-         
-
+        return output;
     }
 
     //helper function: returns boolean to check whether knight can move from origin to current
@@ -80,4 +79,6 @@ const knightMoves = function (start, end) {
 // driver code
 
 const myBoard = new ChessBoard();
-console.log(myBoard.knightLogic([3, 3], [4, 1]));
+
+console.log(myBoard.board);
+console.log(myBoard.adjacency);
