@@ -97,6 +97,7 @@ class ChessBoard {
 
     // 3. employ a search algorithm to output the fewest moves to a given space.
     knightMoves (start, end) {
+        
         //first: check 
         if (
             !this.isValidSpace(start) || 
@@ -108,11 +109,10 @@ class ChessBoard {
 
 
         //breadth-first search
-        for (let i = 0; i<1000; i++) { //temp: to avoid crash
+        for (let i = 0; i < 10000; i++) { //loops limited to 10,000 to avoid crash
             let current;
             let path;
             [current, path] = queue.shift(); //dequeue current
-        
 
             
             //if current node is the end, return the path
@@ -120,12 +120,11 @@ class ChessBoard {
                 console.log("-------------------FOUND--------------------");
                 console.log(i + " loops completed")
                 this.printPath(path);
-                break;
+                return path;
             }
 
             // index of the array representing the current space
             let squareIndex = this.findIndex(current); 
-            console.log(squareIndex);
             
             //enqueue all child nodes
             let childNodes = this.adjacency[squareIndex];
@@ -134,16 +133,17 @@ class ChessBoard {
                 childNodes.forEach((square) => {
                     let newPath; 
                     
-                        if (queue.length > 0) {
-                            newPath = path.push(square) //append the child node to the current path
-                        } else {
-                            newPath = [path, square]
-                        }
-                        queue.push([square, newPath]); //enqueue new node alond with its path
-                    })
+                    if (queue.length > 0) {
+                        newPath = path.concat([square]) //append the child node to the current path
+                    } else {
+                        newPath = [path, square]
+                    }
+                    queue.push([square, newPath]); //enqueue new node alond with its path
+                })
             }
         }
-        return null; //handling if target node is unreachable
+        console.log("-------------------NOT FOUND------------------");
+        return null;
     }
     
     
@@ -164,4 +164,4 @@ const myBoard = new ChessBoard();
 
 // console.log(myBoard.findIndex([6, 5]))
 
-console.log(myBoard.knightMoves([3, 3], [3, 2]))
+console.log(myBoard.knightMoves([0, 0], [7, 7]))
