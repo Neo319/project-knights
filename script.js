@@ -98,35 +98,34 @@ class ChessBoard {
             !this.isValidSpace(end)
         ) throw new Error ("invalid space");
         
-        
-
-        let queue = [[start]]; //initialize queue with path containing only the starting node
+        //initialize queue with path containing only the starting node
+        let queue = [[start, start]]; 
     
         //breadth-first search
         for (let i = 0; i<100; i++) { //temp: to avoid crash
             let current;
             let path;
-            if (queue.length > 0) {
-                [current, path] = queue.shift(); //dequeue current
-            }
+            [current, path] = queue.shift(); //dequeue current
+            
             console.log("current position: " + current)
-            console.log("path: " + path)
+            console.log("path: ")
+            console.log(path);
             
             //if current node is the end, return the path
-            if (arraysAreEqual(current, end)) {
+            if (this.arraysAreEqual(current, end)) {
+                console.log("-------------------FOUND--------------------");
                 return path;
             }
 
-            //(make function)
-            let squareIndex = -1; // index of the array representing the current space
+            // index of the array representing the current space
+            let squareIndex = this.findIndex(current); 
+            console.log(squareIndex);
             
-
             //enqueue all child nodes
             let childNodes = this.adjacency[squareIndex];
 
             if (childNodes) {
                 childNodes.forEach((square) => {
-                    console.log(path);
                     let newPath; 
                     
                         if (queue.length > 0) {
@@ -136,7 +135,6 @@ class ChessBoard {
                         }
                         queue.push([square, newPath]); //enqueue new node alond with its path
                     })
-                console.log(queue);
             }
             
         }
@@ -160,6 +158,6 @@ const myBoard = new ChessBoard();
 // console.log(myBoard.board);
 // console.log(myBoard.adjacency);
 
-console.log(myBoard.findIndex([6, 5]))
+// console.log(myBoard.findIndex([6, 5]))
 
-// console.log(myBoard.knightMoves([3, 3], [3, 1]))
+console.log(myBoard.knightMoves([3, 3], [3, 1]))
