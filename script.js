@@ -54,29 +54,76 @@ class ChessBoard {
         else return false;
     }
 
+    //helper function: returns index of an array on the chessboard
+    findIndex (arr) {
+        for (let i = 0; i < this.board.length; i++) {
+            if (this.arraysAreEqual(this.board[i], arr)) { //comparing the arrays
+                return i; //returns index of square
+            }
+        }
+        throw new Error ("looking for a space that does not exist");
+    }
+
+    // helper function: how the index of a space is found
+    arraysAreEqual(arr1, arr2) {
+        if (arr1.length !== arr2.length) return false;
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) return false;
+        }
+        return true;
+    }
+
     // 3. employ a search algorithm to output the fewest moves to a given space.
     knightMoves (start, end) {
         //first: check 
         if (
-            !isValidSpace(start) || 
-            !isValidSpace(end)
-        ) return null;
+            !this.isValidSpace(start) || 
+            !this.isValidSpace(end)
+        ) throw new Error ("invalid space");
         
-        let queue = [start];
+        
+
+        let queue = [[start]]; //initialize queue with path containing only the starting node
     
         //breadth-first search
-        while (queue.length > 0) { 
-            current = queue.shift(); //dequeue current
-    
-            //process
-    
+        for (let i = 0; i<100; i++) { //temp: to avoid crash
+            let current;
+            let path;
+            if (queue.length > 0) {
+                [current, path] = queue.shift(); //dequeue current
+            }
+            console.log("current position: " + current)
+            console.log("path: " + path)
+            
+            //if current node is the end, return the path
+            if (arraysAreEqual(current, end)) {
+                return path;
+            }
+
+            //(make function)
+            let squareIndex = -1; // index of the array representing the current space
+            
+
             //enqueue all child nodes
+            let childNodes = this.adjacency[squareIndex];
+
+            if (childNodes) {
+                childNodes.forEach((square) => {
+                    console.log(path);
+                    let newPath; 
+                    
+                        if (queue.length > 0) {
+                            newPath = path.concat(square) //append the child node to the current path
+                        } else {
+                            newPath = [path, square]
+                        }
+                        queue.push([square, newPath]); //enqueue new node alond with its path
+                    })
+                console.log(queue);
+            }
             
-            
-    
         }
-    
-    
+        return null; //handling if target node is unreachable
         
     }
     
@@ -111,6 +158,6 @@ const myBoard = new ChessBoard();
 // console.log(myBoard.board);
 // console.log(myBoard.adjacency);
 
-// console.log(knightMoves([3, 3], [3, -1]));
+console.log(myBoard.findIndex([6, 5]))
 
-console.log(isValidSpace([-1, 5]))
+// console.log(myBoard.knightMoves([3, 3], [3, 1]))
