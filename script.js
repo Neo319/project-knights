@@ -90,6 +90,11 @@ class ChessBoard {
         }
     }
 
+    //helper function: printing the path that is found
+    printPath(path) {
+        console.log(path);
+    }
+
     // 3. employ a search algorithm to output the fewest moves to a given space.
     knightMoves (start, end) {
         //first: check 
@@ -100,21 +105,22 @@ class ChessBoard {
         
         //initialize queue with path containing only the starting node
         let queue = [[start, start]]; 
-    
+
+
         //breadth-first search
-        for (let i = 0; i<100; i++) { //temp: to avoid crash
+        for (let i = 0; i<1000; i++) { //temp: to avoid crash
             let current;
             let path;
             [current, path] = queue.shift(); //dequeue current
-            
-            console.log("current position: " + current)
-            console.log("path: ")
-            console.log(path);
+        
+
             
             //if current node is the end, return the path
             if (this.arraysAreEqual(current, end)) {
                 console.log("-------------------FOUND--------------------");
-                return path;
+                console.log(i + " loops completed")
+                this.printPath(path);
+                break;
             }
 
             // index of the array representing the current space
@@ -129,17 +135,15 @@ class ChessBoard {
                     let newPath; 
                     
                         if (queue.length > 0) {
-                            newPath = path.concat(square) //append the child node to the current path
+                            newPath = path.push(square) //append the child node to the current path
                         } else {
                             newPath = [path, square]
                         }
                         queue.push([square, newPath]); //enqueue new node alond with its path
                     })
             }
-            
         }
         return null; //handling if target node is unreachable
-        
     }
     
     
@@ -160,4 +164,4 @@ const myBoard = new ChessBoard();
 
 // console.log(myBoard.findIndex([6, 5]))
 
-console.log(myBoard.knightMoves([3, 3], [3, 1]))
+console.log(myBoard.knightMoves([3, 3], [3, 2]))
