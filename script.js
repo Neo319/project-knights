@@ -80,7 +80,6 @@ class ChessBoard {
             arr.length !== 2// of length 2
         ) return false
         else {
-            console.log(arr)
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i] < 0 || arr[i] > 7) {
                     return false;
@@ -92,7 +91,10 @@ class ChessBoard {
 
     //helper function: printing the path that is found
     printPath(path) {
-        console.log(path);
+        console.log("You made it in " + path.length + " moves! Here's your path:");
+        path.forEach((step) => {
+            console.log(step);
+        })
     }
 
     // 3. employ a search algorithm to output the fewest moves to a given space.
@@ -164,4 +166,4 @@ const myBoard = new ChessBoard();
 
 // console.log(myBoard.findIndex([6, 5]))
 
-console.log(myBoard.knightMoves([0, 0], [7, 7]))
+myBoard.knightMoves([0, 0], [7, 7]);
