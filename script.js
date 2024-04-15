@@ -73,6 +73,23 @@ class ChessBoard {
         return true;
     }
 
+    //helper function: checks that array contain only values from 0-7
+    isValidSpace (arr) {
+        if (
+            !(Array.isArray(arr)) || // must be array
+            arr.length !== 2// of length 2
+        ) return false
+        else {
+            console.log(arr)
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] < 0 || arr[i] > 7) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
     // 3. employ a search algorithm to output the fewest moves to a given space.
     knightMoves (start, end) {
         //first: check 
@@ -127,22 +144,7 @@ class ChessBoard {
         
     }
     
-    //helper function: checks that array contain only values from 0-7
-    isValidSpace (arr) {
-        if (
-            !(Array.isArray(arr)) || // must be array
-            arr.length !== 2// of length 2
-        ) return false
-        else {
-            console.log(arr)
-            for (let i = 0; i < arr.length; i++) {
-                if (arr[i] < 0 || arr[i] > 7) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
+    
 }
 
 
